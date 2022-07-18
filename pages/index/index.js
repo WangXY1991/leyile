@@ -48,17 +48,10 @@ Page({
     JinRiCaiDanShow:[],
     JinRiZhuangTaiShow:[],
 
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    canIUseGetUserProfile: false,
-    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
-  },
-  // 事件处理函数
-  bindViewTap() {
-    this.getUserProfile();
+
   },
 
+  // 事件处理函数
   bindTodayDateChange: function(e) {
     this.setData({
       vtodaydate: e.detail.value
@@ -85,25 +78,7 @@ Page({
 
   GetJinRiCaiDan: function(arg)
   {
-    const cloud = require('wx-server-sdk')
-    cloud.init({
-      env: cloud.DYNAMIC_CURRENT_ENV
-    })
-
-
-    db.collection('test')
-      .where({
-        date:"0000-00-00"
-      })
-      .field({
-        caidan: true,
-        zhuangtai: true,
-      })
-      .get({
-          success: function(res) {
-          console.log(res.data)
-        }}
-      )  
+    
   },
 
   JinRiCaiDanReLoad: function()
@@ -173,33 +148,6 @@ Page({
 
     this.JinRiCaiDanReLoad();
     this.JinRiZhuangTaiReLoad();
-  },
-
-  getUserProfile(e) {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-    console.log("getUserProfile 0");
-    wx.getUserProfile({
-      desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
-        console.log("getUserProfile 1");
-        console.log(res)
-        console.log("getUserProfile 2");
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    })
-  },
-  getUserInfo(e) {
-    // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息
-    console.log("getUserInfo 0");
-    console.log(e)
-    console.log("getUserInfo 1");
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
   },
 
   editcaidanlist(){
