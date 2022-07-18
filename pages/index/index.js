@@ -37,48 +37,182 @@ Page({
     editDlgTitle:"",
     editValue:"",
 
+    vdate: "",
+
     MyCaiDan:{"obj":[],"str":""},
     MyZhuangTai:{"obj":[],"str":""},
 
-    MyJinRiCaiDan:[],
-    MyJinRiZhuangTai:[],
+
     JinRiCaiDanDisEdit:true,
     JinRiZhuangTaiDisEdit:true,
 
+    MyJinRiCaiDan:[],
+    MyJinRiZhuangTai:[],
     JinRiCaiDanShow:[],
     JinRiZhuangTaiShow:[],
-
 
   },
 
   // 事件处理函数
   bindTodayDateChange: function(e) {
     this.setData({
-      vtodaydate: e.detail.value
+      vdate: e.detail.value
     })
-    
-    
-
+    this.GetJinRiCaiDan();
+    this.GetJinRiZhuangTai();
   },
 
   SetCaiDan: function()
   {
-
+    wx.cloud.init();
+    wx.cloud.callFunction({
+      name: 'putData',
+      data: {
+      date: "0000-00-00",
+      caidan: this.data.MyCaiDan.str,
+      zhuangtai: ""
+      }
+    })
   },
 
   GetCaiDan: function()
   {
-
+    wx.cloud.init();
+    wx.cloud.callFunction({
+      name: 'getData',
+      data: {
+      date: "0000-00-00",
+      caidan: "",
+      zhuangtai: ""
+      }
+    })
+    .then(res=>{
+      if(res.result.errMsg=="collection.get:ok")
+      {
+        var obj = [];
+        if(res.result.data.length == 1) obj = res.result.data[0].caidan.split(",");
+        var caidan = {"obj":obj, "str":obj.toString()};
+        this.setData({
+          MyCaiDan:caidan,
+        });
+        this.JinRiCaiDanReLoad();
+      }
+    })
   },
 
   SetJinRiCaiDan: function()
   {
-
+    wx.cloud.init();
+    wx.cloud.callFunction({
+      name: 'putData',
+      data: {
+      date: this.data.vdate,
+      caidan: this.data.MyJinRiCaiDan.toString(),
+      zhuangtai: ""
+      }
+    })
   },
 
-  GetJinRiCaiDan: function(arg)
+  GetJinRiCaiDan: function()
   {
-    
+    wx.cloud.init();
+    wx.cloud.callFunction({
+      name: 'getData',
+      data: {
+      date: this.data.vdate,
+      caidan: "",
+      zhuangtai: ""
+      }
+    })
+    .then(res=>{
+      console.log(res);
+      if(res.result.errMsg=="collection.get:ok")
+      {
+        var obj = [];
+        if(res.result.data.length == 1) obj = res.result.data[0].caidan.split(",");
+          this.setData({
+            MyJinRiCaiDan:obj,
+          });
+          this.JinRiCaiDanReLoad();
+      }
+    })
+
+  },
+  
+  GetZhuangTai: function()
+  {
+    wx.cloud.init();
+    wx.cloud.callFunction({
+      name: 'getData',
+      data: {
+      date: "0000-00-00",
+      caidan: "",
+      zhuangtai: ""
+      }
+    })
+    .then(res=>{
+        if(res.result.errMsg=="collection.get:ok")
+        {
+          var obj = [];
+          if(res.result.data.length == 1) obj = res.result.data[0].zhuangtai.split(",");
+          var zhuangtai = {"obj":obj, "str":obj.toString()};
+          this.setData({
+            MyZhuangTai:zhuangtai,
+          });
+
+          this.JinRiZhuangTaiReLoad();
+        }
+    })
+  },
+
+  SetZhuangTai: function()
+  {
+    wx.cloud.init();
+    wx.cloud.callFunction({
+      name: 'putData',
+      data: {
+      date: "0000-00-00",
+      caidan: "",
+      zhuangtai: this.MyZhuangTai.toString()
+      }
+    })
+  },
+
+  SetJinRiZhuangTai: function()
+  {
+    wx.cloud.init();
+    wx.cloud.callFunction({
+      name: 'putData',
+      data: {
+      date: this.data.vdate,
+      caidan: "",
+      zhuangtai: this.data.MyJinRiZhuangTai.toString()
+      }
+    })
+  },
+
+  GetJinRiZhuangTai: function()
+  {
+    wx.cloud.init();
+    wx.cloud.callFunction({
+      name: 'getData',
+      data: {
+      date: this.data.vdate,
+      caidan: "",
+      zhuangtai: ""
+      }
+    })
+    .then(res=>{
+      if(res.result.errMsg=="collection.get:ok")
+        {
+          var obj = [];
+          if(res.result.data.length == 1) obj = res.result.data[0].zhuangtai.split(",");
+            this.setData({
+              MyJinRiZhuangTai:obj,
+            });
+            this.JinRiZhuangTaiReLoad();
+        }
+  })
   },
 
   JinRiCaiDanReLoad: function()
@@ -124,30 +258,15 @@ Page({
   
   onLoad() { 
     var today = util.formatTime(new Date());
-
-    //this.GetJinRiCaiDan(e.detail.value);
-
-    //load
-    var caidanobj = ["菜单1","菜单2","菜单3","菜单4","菜单5","菜单6","菜单7","菜单8","菜单9"];
-    var caidan = {"obj":caidanobj, "str":caidanobj.toString()};
-    var zhuangtaiobj = ["正常","状态A","状态B","状态C","状态D"];
-    var zhuangtai = {"obj":zhuangtaiobj, "str":zhuangtaiobj.toString()};
-
-    //load
-    var jinricaidan = [];
-    var jinrizhuangtai = [];
-    
     this.setData({
-      canIUseGetUserProfile: true,
-      vtodaydate: today,
-      MyCaiDan: caidan,
-      MyZhuangTai: zhuangtai,
-      MyJinRiCaiDan:jinricaidan,
-      MyJinRiZhuangTai:jinrizhuangtai,
+      vdate: today,
     });
 
-    this.JinRiCaiDanReLoad();
-    this.JinRiZhuangTaiReLoad();
+    console.log("onload");
+    this.GetZhuangTai();
+    this.GetJinRiZhuangTai();
+    this.GetCaiDan();
+    this.GetJinRiCaiDan();
   },
 
   editcaidanlist(){
@@ -196,7 +315,7 @@ Page({
         JinRiCaiDanDisEdit:!this.data.JinRiCaiDanDisEdit,
     })
 
-    if(this.data.JinRiCaiDanDisEdit) this.JinRiCaiDanReLoad();
+    if(this.data.JinRiCaiDanDisEdit) this.SetJinRiCaiDan();
   },
 
   editjinrizhuangtai(){
@@ -204,7 +323,7 @@ Page({
         JinRiZhuangTaiDisEdit:!this.data.JinRiZhuangTaiDisEdit,
     });
 
-    if(this.data.JinRiZhuangTaiDisEdit) this.JinRiZhuangTaiReLoad();
+    if(this.data.JinRiZhuangTaiDisEdit) this.SetJinRiZhuangTai();
 
   },
 
@@ -234,6 +353,8 @@ Page({
             editValue:"",
             MyCaiDan: caidan,
         })
+
+        this.SetCaiDan();
     }
 
     if(this.data.whichEditor == "zhuangtai")
@@ -250,6 +371,8 @@ Page({
             editValue:"",
             MyZhuangTai: zhuangtai,
         })
+
+        this.SetZhuangTai();
     }
 
   },
@@ -280,6 +403,8 @@ Page({
             editValue:"",
             MyCaiDan: caidan,
         })
+
+        this.SetCaiDan();
     }
 
     if(this.data.whichEditor == "zhuangtai")
@@ -296,6 +421,8 @@ Page({
             editValue:"",
             MyZhuangTai: zhuangtai,
         })
+
+        this.SetZhuangTai();
     }
   },
 

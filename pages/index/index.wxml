@@ -6,9 +6,9 @@
       <view class="todaydatetitle">
       时间：
       </view>
-      <picker mode="date" value="{{vtodaydate}}" start="2020-01-01" end="2050-12-31" bindchange="bindTodayDateChange">
+      <picker mode="date" value="{{vdate}}" start="2020-01-01" end="2050-12-31" bindchange="bindTodayDateChange">
         <view class="todaydateselector">
-          {{vtodaydate}}
+          {{vdate}}
         </view>
       </picker>
     </view>
