@@ -34,7 +34,7 @@
       <view>菜单表：</view>
       <button class="btn" type="default" plain="true" size="mini" bindtap="editcaidanlist">编辑</button>
     </view>
-    <textarea class="tarea" maxlength="-1" auto-height value="{{MyCaiDan.str}}" disabled="true" />
+    <textarea class="tarea" maxlength="-1" auto-height value="{{CaiDanShow}}" disabled="true" />
     
   </view>
 
@@ -43,7 +43,7 @@
       <view>状态表：</view>
       <button class="btn" type="default" plain="true" size="mini" bindtap="editzhuangtailist">编辑</button>
     </view>
-    <textarea class="tarea" maxlength="-1" auto-height value="{{MyZhuangTai.str}}" disabled="true" />
+    <textarea class="tarea" maxlength="-1" auto-height value="{{ZhuangTaiShow}}" disabled="true" />
   </view>
 
   <view>
