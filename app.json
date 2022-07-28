@@ -1,16 +1,31 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs"
-    
+    "pages/fulllists/fulllists"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "tabBar": {
+    "custom": true,
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "今日食谱"
+      },
+      {
+        "pagePath": "pages/fulllists/fulllists",
+        "text": "食谱列表"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "乐乐大方",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
-
   "style": "v2",
   "sitemapLocation": "sitemap.json"
 }

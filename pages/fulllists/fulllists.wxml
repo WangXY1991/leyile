@@ -1,0 +1,47 @@
+<!--pages/fulllists.wxml-->
+<!--index.wxml-->
+<view class="mask" catchtouchmove="preventTouchMove" wx:if="{{useMask}}"></view>
+
+<view class="editDlg" wx:if="{{showEditDlg}}">
+  <view>
+      <view class="weui-cells__title">{{editDlgTitle}}</view>
+      <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+              <input class="weui-input" maxlength="32" bindinput="bindKeyInput"/>
+          </view>
+      </view>
+  </view>
+  <view>
+      <button class="editDlgDelBtn" type="default" plain="true" size="mini" bindtap="delete">删除</button>
+      <button class="editDlgAddBtn" type="default" plain="true" size="mini" bindtap="add">添加</button>
+  </view>
+</view>
+
+<view>
+  <view class="czhuangtai">
+    <view>状态表：</view>
+    <button class="btn" type="default" plain="true" size="mini" bindtap="editzhuangtailist">编辑</button>
+  </view>
+  <textarea class="tarea" maxlength="-1" auto-height value="{{ZhuangTaiShow}}" disabled="true" />
+</view>
+
+<view>
+  <view class="ccaidan">
+    <view>菜单表：</view>
+    <button class="btn" type="default" plain="true" size="mini" bindtap="editcaidanlist">编辑</button>
+  </view>
+  <textarea class="tarea" maxlength="-1" auto-height value="{{CaiDanShow}}" disabled="true" />
+  
+</view>
+
+
+
+
+
+
+
+
+
+
+
+

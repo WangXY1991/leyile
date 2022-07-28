@@ -1,34 +1,78 @@
+/* pages/fulllists.wxss */
 /**index.wxss**/
 
-.ctodaydate{
+.ccaidan{
   display: flex;
   flex-direction: row;
   align-items: center;
   margin: 20rpx;
 }
+.czhuangtai{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 20rpx;
+  }
 
-.cjinricaidan{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 20rpx;
-  }
-.cjinrizhuangtai{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 20rpx;
-  }
 .btn{
     margin-right: 60rpx;
 }
+
+
+.mask{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #000;
+    z-index: 9000;
+    opacity: 0.5;
+}
+
+.editDlg{
+    width: 80%;
+    height: 30%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius:5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editDlgDelBtn
+{
+    margin-top: 100rpx;
+    margin-right: 60rpx;   
+}
+
+.editDlgAddBtn
+{
+    margin-top: 100rpx;
+    margin-left: 60rpx;
+}
+.tarea
+{
+    margin: 20rpx;
+    width: auto;
+    white-space: normal;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: rgb(66, 66, 66);
+}
+
 
 
 .weui-check__label:active {
     background-color: #ECECEC;
   }
 
-.weui-cell__hd_in-select-after,
+  .weui-cell__hd_in-select-after,
 .weui-cell__bd_in-select-before {
   padding-left: 15px;
 }

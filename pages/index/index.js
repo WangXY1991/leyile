@@ -1,60 +1,10 @@
-var util = require('../../utils/util.js');
-var db = require('../../utils/db.js');
+// pages/fulllists.js
+var util = require('../../utils/util.js')
+var db = require('../../utils/db.js')
 
-// index.js
-// 获取应用实例
 const app = getApp()
 
-const types = ['default', 'primary', 'warn']
-const pageObject = {
-  data: {
-    defaultSize: 'default',
-    primarySize: 'default',
-    warnSize: 'default',
-    disabled: false,
-    plain: false,
-    loading: false
-  },
-}
-for (let i = 0; i < types.length; ++i) {
-    (function (type) {
-      pageObject[type] = function () {
-        const key = type + 'Size'
-        const changedData = {}
-        changedData[key] =
-          this.data[key] === 'default' ? 'mini' : 'default'
-        this.setData(changedData)
-      }
-    }(types[i]))
-  }
-  
 Page({
-  data: {
-    useMask: false,
-    showEditDlg: false,
-    
-    whichEditor:"",
-
-    editDlgTitle:"",
-    editValue:"",
-
-    vdate: "",
-
-    JinRiCaiDanDisEdit:true,
-    JinRiZhuangTaiDisEdit:true,
-
-    MyCaiDan:[],
-    MyZhuangTai:[],
-
-    MyJinRiCaiDan:[],
-    MyJinRiZhuangTai:[],
-
-    CaiDanShow:"",
-    ZhuangTaiShow:"",
-    JinRiCaiDanShow:[],
-    JinRiZhuangTaiShow:[],
-
-  },
 
   // 事件处理函数
   bindTodayDateChange: function(e) {
@@ -66,8 +16,12 @@ Page({
 
   SetData: async function(date_, value_)
   {
-    wx.setStorageSync(date_, value_);
-    db.SetCloudData(date_);
+    var oldvalue = wx.getStorageSync(date_);
+    if(oldvalue != value_)
+    {
+      wx.setStorageSync(date_, value_);
+      await db.SetCloudData(date_);
+    }
   },
    
   GetData: async function(date_)
@@ -153,36 +107,6 @@ Page({
           })
   },
   
-  onLoad() { 
-    var today = util.formatTime(new Date());
-    this.setData({
-      vdate: today,
-    });
-
-    console.log("onload");
-    this.GetData("0000-00-00");
-    this.GetData(today);
-  },
-
-  editcaidanlist(){
-    this.setData({
-        whichEditor:"caidan",
-        editDlgTitle:"请输入菜单",
-        useMask:true,
-        showEditDlg:true,
-        editValue:""
-    })
-  },
-
-  editzhuangtailist(){
-    this.setData({
-        whichEditor:"zhuangtai",
-        editDlgTitle:"请输入状态",
-        useMask:true,
-        showEditDlg:true,
-        editValue:""
-    })
-  },
 
   jinricaidanChange(e)
   {
@@ -230,106 +154,91 @@ Page({
 
   },
 
-  delete(){
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    vdate: "",
 
-    if(this.data.editValue == "")
-    {
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-        })   
-    }
+    JinRiCaiDanDisEdit:true,
+    JinRiZhuangTaiDisEdit:true,
 
-    if(this.data.whichEditor == "caidan")
-    {
-        var obj = this.data.MyCaiDan;
-        var index = obj.indexOf(this.data.editValue);
-        if(index != -1) obj.splice(index,1);
+    MyCaiDan:[],
+    MyZhuangTai:[],
 
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-            MyCaiDan: obj,
-            CaiDanShow:obj.toString(),
-        })
-    }
+    MyJinRiCaiDan:[],
+    MyJinRiZhuangTai:[],
 
-    if(this.data.whichEditor == "zhuangtai")
-    {
-        var obj = this.data.MyZhuangTai;
-        var index = obj.indexOf(this.data.editValue);
-        if(index != -1) obj.splice(index,1);
-
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-            MyZhuangTai: obj,
-            ZhuangTaiShow:obj.toString(),
-        })
-    }
-
-    var value = {"caidan": this.data.MyCaiDan.toString(), "zhuangtai:":this.data.MyZhuangTai.toString()}
-    this.SetData("0000-00-00",value);
+    JinRiCaiDanShow:[],
+    JinRiZhuangTaiShow:[],
   },
 
-  add(){
-
-    if(this.data.editValue == "")
-    {
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-        })   
-    }
-
-    if(this.data.whichEditor == "caidan")
-    {
-        var obj = this.data.MyCaiDan;
-        var index = obj.indexOf(this.data.editValue);
-        if(index == -1) obj.push(this.data.editValue);
-
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-            MyCaiDan: obj,
-            CaiDanShow:obj.toString(),
-        })
-    }
-
-    if(this.data.whichEditor == "zhuangtai")
-    {
-        var obj = this.data.MyZhuangTai;  
-        var index = obj.indexOf(this.data.editValue);
-        if(index == -1) obj.push(this.data.editValue);
-
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-            MyZhuangTai: obj,
-            ZhuangTaiShow:obj.toString(),
-        })
-    }
-
-    var value = {"caidan": this.data.MyCaiDan.toString(), "zhuangtai:":this.data.MyZhuangTai.toString()}
-    this.SetData("0000-00-00",value);
-  },
-
-  bindKeyInput: function (e) {
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
+    var today = util.formatTime(new Date());
     this.setData({
-        editValue: e.detail.value
-    })
+      vdate: today,
+    });
+
+    this.GetData("0000-00-00");
+    this.GetData(today);
   },
 
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+
+    if (typeof this.getTabBar === 'function' &&
+        this.getTabBar()) {
+        this.getTabBar().setData({
+          selected: 0
+        })
+      }
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
+  }
 })

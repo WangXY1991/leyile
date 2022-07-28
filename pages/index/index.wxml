@@ -1,67 +1,15 @@
 <!--index.wxml-->
-  <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{useMask}}"></view>
 
-  <view>
-    <view class="ctodaydate">
-      <view class="todaydatetitle">
-      时间：
-      </view>
-      <picker mode="date" value="{{vdate}}" start="2020-01-01" end="2050-12-31" bindchange="bindTodayDateChange">
-        <view class="todaydateselector">
-          {{vdate}}
-        </view>
-      </picker>
+<view class="ctodaydate">
+  <view class="todaydatetitle">时间：</view>
+  <picker mode="date" value="{{vdate}}" start="2020-01-01" end="2050-12-31" bindchange="bindTodayDateChange">
+    <view class="todaydateselector">
+      {{vdate}}
     </view>
-  </view>
+  </picker>
+</view>
 
-  <view class="editDlg" wx:if="{{showEditDlg}}">
-    <view>
-        <view class="weui-cells__title">{{editDlgTitle}}</view>
-        <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell weui-cell_input">
-                <input class="weui-input" maxlength="32" bindinput="bindKeyInput"/>
-            </view>
-        </view>
-    </view>
-    <view>
-        <button class="editDlgDelBtn" type="default" plain="true" size="mini" bindtap="delete">删除</button>
-        <button class="editDlgAddBtn" type="default" plain="true" size="mini" bindtap="add">添加</button>
-    </view>
-  </view>
-
-  <view>
-    <view class="ccaidan">
-      <view>菜单表：</view>
-      <button class="btn" type="default" plain="true" size="mini" bindtap="editcaidanlist">编辑</button>
-    </view>
-    <textarea class="tarea" maxlength="-1" auto-height value="{{CaiDanShow}}" disabled="true" />
-    
-  </view>
-
-  <view>
-    <view class="czhuangtai">
-      <view>状态表：</view>
-      <button class="btn" type="default" plain="true" size="mini" bindtap="editzhuangtailist">编辑</button>
-    </view>
-    <textarea class="tarea" maxlength="-1" auto-height value="{{ZhuangTaiShow}}" disabled="true" />
-  </view>
-
-  <view>
-    <view class="cjinricaidan">
-      <view>今日菜单：</view>
-      <button class="btn" type="default" plain="true" size="mini" bindtap="editjinricaidan">编辑</button>
-    </view>
-    <checkbox-group bindchange="jinricaidanChange">
-	  <label class="weui-cell weui-check__label" wx:for="{{JinRiCaiDanShow}}" wx:key="{{item.name}}">
-		<view class="weui-cell__hd">
-		  <checkbox value="{{item.value}}" checked="{{item.checked}}" disabled="{{JinRiCaiDanDisEdit}}"/>
-		</view>
-		<view class="weui-cell__bd">{{item.name}}</view>
-	  </label>
-    </checkbox-group>
-  </view>
-
-  <view>
+<view>
     <view class="cjinrizhuangtai">
       <view>今日状态：</view>
       <button class="btn" type="default" plain="true" size="mini" bindtap="editjinrizhuangtai">编辑</button>
@@ -75,7 +23,26 @@
 		<view class="weui-cell__bd">{{item.name}}</view>
 	  </label>
     </checkbox-group>
-  </view>
+</view>
+
+<view>
+    <view class="cjinricaidan">
+      <view>今日菜单：</view>
+      <button class="btn" type="default" plain="true" size="mini" bindtap="editjinricaidan">编辑</button>
+    </view>
+    <checkbox-group bindchange="jinricaidanChange">
+	  <label class="weui-cell weui-check__label" wx:for="{{JinRiCaiDanShow}}" wx:key="{{item.name}}">
+		<view class="weui-cell__hd">
+		  <checkbox value="{{item.value}}" checked="{{item.checked}}" disabled="{{JinRiCaiDanDisEdit}}"/>
+		</view>
+		<view class="weui-cell__bd">{{item.name}}</view>
+	  </label>
+    </checkbox-group>
+</view>
+
+
+
+
 
 
 
