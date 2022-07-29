@@ -10,7 +10,7 @@ Page({
     this.setData({
       vdate: e.detail.value
     })
-    this.GetData(e.detail.value);
+    this.LoadData();
   },
 
 
@@ -181,7 +181,6 @@ Page({
     this.setData({
       vdate: today,
     });
-
     this.LoadData();
   },
 

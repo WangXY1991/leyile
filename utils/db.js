@@ -33,7 +33,6 @@ async function GetCloudData(date_)
     {
       var value = {"caidan":res.result.data[0].caidan, "zhuangtai":res.result.data[0].zhuangtai};
       wx.setStorageSync(date_, value);
-      console.log(value);
     }
   }
 }

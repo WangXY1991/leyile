@@ -7,7 +7,10 @@ App({
       }
     })
 
-    //test
+    //code
+    wx.clearStorageSync()
+
+    //test code
     
   },
 })
