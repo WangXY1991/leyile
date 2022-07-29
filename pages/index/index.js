@@ -1,6 +1,7 @@
 // pages/fulllists.js
 var util = require('../../utils/util.js')
 var db = require('../../utils/db.js')
+import pinyin from "wl-pinyin";
 
 Page({
 
@@ -59,12 +60,18 @@ Page({
         for(var i=0; i<jinricaidanobj.length; i++)
         {
             jinricaidans.push({"value":jinricaidanobj[i],"name":jinricaidanobj[i], "checked":true}); 
-        } 
+        }
+
+        var jinricaidans_u = [];
         for(var i=0; i<caidanobj.length; i++)
         {
             if(-1 == jinricaidanobj.indexOf(caidanobj[i]))
-            jinricaidans.push({"value":caidanobj[i],"name":caidanobj[i], "checked":false});    
+            jinricaidans_u.push({"value":caidanobj[i],"name":caidanobj[i], "checked":false});    
         }
+
+        jinricaidans.sort((a,b) => pinyin.getPinyin(a.value)>pinyin.getPinyin(b.value)?1:-1);
+        jinricaidans_u.sort((a,b) => pinyin.getPinyin(a.value)>pinyin.getPinyin(b.value)?1:-1);
+        jinricaidans.push(...jinricaidans_u);
 
         this.setData({
             JinRiCaiDanShow: jinricaidans,
@@ -80,12 +87,18 @@ Page({
         for(var i=0; i<jinrizhuangtaiobj.length; i++)
         {
             jinrizhuangtais.push({"value":jinrizhuangtaiobj[i],"name":jinrizhuangtaiobj[i], "checked":true}); 
-        } 
+        }
+
+        var jinrizhuangtais_u = [];
         for(var i=0; i<zhuangtaiobj.length; i++)
         {
             if(-1 == jinrizhuangtaiobj.indexOf(zhuangtaiobj[i]))
-            jinrizhuangtais.push({"value":zhuangtaiobj[i],"name":zhuangtaiobj[i], "checked":false});    
+            jinrizhuangtais_u.push({"value":zhuangtaiobj[i],"name":zhuangtaiobj[i], "checked":false});    
         }
+
+        jinrizhuangtais.sort((a,b) => pinyin.getPinyin(a.value)>pinyin.getPinyin(b.value)?1:-1);
+        jinrizhuangtais_u.sort((a,b) => pinyin.getPinyin(a.value)>pinyin.getPinyin(b.value)?1:-1);
+        jinrizhuangtais.push(...jinrizhuangtais_u);
 
         this.setData({
             JinRiZhuangTaiShow: jinrizhuangtais,

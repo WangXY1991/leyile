@@ -1,0 +1,22 @@
+{
+  "name": "leyile",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://oauth2: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@github.com/WangXY1991/leyile.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WangXY1991/leyile/issues"
+  },
+  "homepage": "https://github.com/WangXY1991/leyile#readme",
+  "dependencies": {
+    "wl-pinyin": "^1.0.1"
+  }
+}

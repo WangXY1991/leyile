@@ -1,7 +1,24 @@
 // pages/fulllists.js
 var db = require('../../utils/db.js')
+import pinyin from "wl-pinyin";
 
 Page({
+
+CaiDanReload: function() {
+  var caidanobj = this.data.MyCaiDan;
+  caidanobj.sort((a,b) => pinyin.getPinyin(a)>pinyin.getPinyin(b)?1:-1);
+  this.setData({
+    MyCaiDan:caidanobj,
+  }); 
+},
+
+ZhuangTaiReload: function() {
+  var zhuangtaiobj = this.data.MyZhuangTai;
+  zhuangtaiobj.sort((a,b) => pinyin.getPinyin(a)>pinyin.getPinyin(b)?1:-1);
+  this.setData({
+    MyZhuangTai:zhuangtaiobj,
+  }); 
+},
   
 LoadData: async function()
 {
@@ -20,7 +37,12 @@ LoadData: async function()
       MyZhuangTai:zhuangtaiobj,
     });
   }
+
+  this.CaiDanReload();
+  this.ZhuangTaiReload();
 },
+
+
 
 deletefromlists: function(e) {
 
@@ -34,6 +56,7 @@ deletefromlists: function(e) {
     this.setData({
         MyCaiDan: obj,
     })
+    this.CaiDanReload();
   }
   else if(e.mark.type == "zhuangtai")
   {
@@ -44,6 +67,7 @@ deletefromlists: function(e) {
     this.setData({
         MyZhuangTai: obj,
     })
+    this.ZhuangTaiReload();
   }
 
   var value = {"caidan": this.data.MyCaiDan.toString(), "zhuangtai":this.data.MyZhuangTai.toString()}
@@ -109,6 +133,7 @@ addlists: function(e) {
               editValue:"",
               MyCaiDan: obj,
           })
+          this.CaiDanReload();
       }
 
       if(this.data.whichEditor == "zhuangtai")
@@ -124,6 +149,7 @@ addlists: function(e) {
               editValue:"",
               MyZhuangTai: obj,
           })
+          this.ZhuangTaiReload();
       }
 
       var value = {"caidan": this.data.MyCaiDan.toString(), "zhuangtai":this.data.MyZhuangTai.toString()}
