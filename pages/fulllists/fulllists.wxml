@@ -12,27 +12,41 @@
       </view>
   </view>
   <view>
-      <button class="editDlgDelBtn" type="default" plain="true" size="mini" bindtap="delete">删除</button>
+      <button class="editDlgCancelBtn" type="default" plain="true" size="mini" bindtap="cancel">取消</button>
       <button class="editDlgAddBtn" type="default" plain="true" size="mini" bindtap="add">添加</button>
   </view>
 </view>
 
 <view>
-  <view class="czhuangtai">
-    <view>状态表：</view>
-    <button class="btn" type="default" plain="true" size="mini" bindtap="editzhuangtailist">编辑</button>
+  <view class="czhuangtai">状态表：</view>
+
+  <label class="weui-cell" wx:for="{{MyZhuangTai}}" wx:for-index="idx" wx:for-item="itemName">
+    <view class="weui-cell__c2-left">{{itemName}}</view>
+		<view class="weui-cell__c2-right">
+		  <button type="default" plain="true" style="width:108rpx;height:54rpx;padding:0;" mark:type="zhuangtai" mark:value="{{itemName}}" bindtap="deletefromlists">删除</button>
+		</view>
+  </label>
+  <view >
+    <view class="weui-cell_line"/>
+    <button mark:type="zhuangtai" bindtap="addlists">添加</button>
   </view>
-  <textarea class="tarea" maxlength="-1" auto-height value="{{ZhuangTaiShow}}" disabled="true" />
 </view>
 
 <view>
-  <view class="ccaidan">
-    <view>菜单表：</view>
-    <button class="btn" type="default" plain="true" size="mini" bindtap="editcaidanlist">编辑</button>
+  <view class="ccaidan">菜单表：</view>
+
+  <label class="weui-cell" wx:for="{{MyCaiDan}}" wx:for-index="idx" wx:for-item="itemName">
+    <view class="weui-cell__c2-left">{{itemName}}</view>
+		<view class="weui-cell__c2-right">
+		  <button type="default" plain="true" style="width:108rpx;height:54rpx;padding:0;" mark:type="caidan" mark:value="{{itemName}}" bindtap="deletefromlists">删除</button>
+		</view>
+  </label>
+  <view >
+    <view class="weui-cell_line"/>
+    <button mark:type="caidan" bindtap="addlists">添加</button>
   </view>
-  <textarea class="tarea" maxlength="-1" auto-height value="{{CaiDanShow}}" disabled="true" />
-  
 </view>
+
 
 
 

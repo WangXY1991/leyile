@@ -1,119 +1,86 @@
 // pages/fulllists.js
-var util = require('../../utils/util.js')
 var db = require('../../utils/db.js')
-
-const app = getApp()
 
 Page({
   
-  SetData: async function(date_, value_)
+LoadData: async function()
+{
   {
-    var oldvalue = wx.getStorageSync(date_);
-    if(oldvalue != value_)
-    {
-      wx.setStorageSync(date_, value_);
-      await db.SetCloudData(date_);
-    }
-  },
-   
-  GetData: async function(date_)
-  {
-    var value = wx.getStorageSync(date_);
-    if(value)
-    {	
-    }
-    else
-    {
-      await db.GetCloudData(date_);
-      value = wx.getStorageSync(date_);
-    }
-
+    var value = await db.GetDataValue("0000-00-00");
     var caidanobj = [];
     var zhuangtaiobj = [];
     if(value)
     {
-      if(value.caidan != "") caidanobj =  value.caidan.split(",");
-      if(value.zhuangtai != "") zhuangtaiobj = value.zhuangtai.split(",");
+      if(value.caidan) caidanobj =  value.caidan.split(",");
+      if(value.zhuangtai) zhuangtaiobj = value.zhuangtai.split(",");
     }
 
-    if(date_ == "0000-00-00")
+    this.setData({
+      MyCaiDan:caidanobj,
+      MyZhuangTai:zhuangtaiobj,
+    });
+  }
+},
+
+deletefromlists: function(e) {
+
+  var value = e.mark.value;
+
+  if(e.mark.type == "caidan")
+  {
+    var obj = this.data.MyCaiDan;
+    var index = obj.indexOf(value);
+    if(index != -1) obj.splice(index,1);
+    this.setData({
+        MyCaiDan: obj,
+    })
+  }
+  else if(e.mark.type == "zhuangtai")
+  {
+    var obj = this.data.MyZhuangTai;
+    var index = obj.indexOf(value);
+    if(index != -1) obj.splice(index,1);
+    
+    this.setData({
+        MyZhuangTai: obj,
+    })
+  }
+
+  var value = {"caidan": this.data.MyCaiDan.toString(), "zhuangtai":this.data.MyZhuangTai.toString()}
+  db.SetDataValue("0000-00-00",value);
+},
+
+
+addlists: function(e) {
+    if(e.mark.type == "caidan")
     {
       this.setData({
-        MyCaiDan:caidanobj,
-        CaiDanShow:caidanobj.toString(),
-
-        MyZhuangTai:zhuangtaiobj,
-        ZhuangTaiShow:zhuangtaiobj.toString(),
-      });
-    }
-  },
-
-  editcaidanlist(){
-    this.setData({
         whichEditor:"caidan",
         editDlgTitle:"请输入菜单",
         useMask:true,
         showEditDlg:true,
         editValue:""
-    })
-  },
-
-  editzhuangtailist(){
-    this.setData({
+     })
+    }
+    else if(e.mark.type == "zhuangtai")
+    {
+      this.setData({
         whichEditor:"zhuangtai",
         editDlgTitle:"请输入状态",
         useMask:true,
         showEditDlg:true,
         editValue:""
-    })
+      })
+    }
   },
 
-  delete(){
-
-    if(this.data.editValue == "")
-    {
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-        })   
-    }
-
-    if(this.data.whichEditor == "caidan")
-    {
-        var obj = this.data.MyCaiDan;
-        var index = obj.indexOf(this.data.editValue);
-        if(index != -1) obj.splice(index,1);
-
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-            MyCaiDan: obj,
-            CaiDanShow:obj.toString(),
-        })
-    }
-
-    if(this.data.whichEditor == "zhuangtai")
-    {
-        var obj = this.data.MyZhuangTai;
-        var index = obj.indexOf(this.data.editValue);
-        if(index != -1) obj.splice(index,1);
-
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-            MyZhuangTai: obj,
-            ZhuangTaiShow:obj.toString(),
-        })
-    }
-
-    var value = {"caidan": this.data.MyCaiDan.toString(), "zhuangtai:":this.data.MyZhuangTai.toString()}
-    this.SetData("0000-00-00",value);
+  cancel(){
+    this.setData({
+      whichEditor:"",
+      useMask:false,
+      showEditDlg:false,
+      editValue:"",
+    })
   },
 
   add(){
@@ -127,41 +94,41 @@ Page({
             editValue:"",
         })   
     }
-
-    if(this.data.whichEditor == "caidan")
+    else
     {
-        var obj = this.data.MyCaiDan;
-        var index = obj.indexOf(this.data.editValue);
-        if(index == -1) obj.push(this.data.editValue);
+      if(this.data.whichEditor == "caidan")
+      {
+          var obj = this.data.MyCaiDan;
+          var index = obj.indexOf(this.data.editValue);
+          if(index == -1) obj.push(this.data.editValue);
 
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-            MyCaiDan: obj,
-            CaiDanShow:obj.toString(),
-        })
+          this.setData({
+              whichEditor:"",
+              useMask:false,
+              showEditDlg:false,
+              editValue:"",
+              MyCaiDan: obj,
+          })
+      }
+
+      if(this.data.whichEditor == "zhuangtai")
+      {
+          var obj = this.data.MyZhuangTai;  
+          var index = obj.indexOf(this.data.editValue);
+          if(index == -1) obj.push(this.data.editValue);
+
+          this.setData({
+              whichEditor:"",
+              useMask:false,
+              showEditDlg:false,
+              editValue:"",
+              MyZhuangTai: obj,
+          })
+      }
+
+      var value = {"caidan": this.data.MyCaiDan.toString(), "zhuangtai":this.data.MyZhuangTai.toString()}
+      db.SetDataValue("0000-00-00",value);
     }
-
-    if(this.data.whichEditor == "zhuangtai")
-    {
-        var obj = this.data.MyZhuangTai;  
-        var index = obj.indexOf(this.data.editValue);
-        if(index == -1) obj.push(this.data.editValue);
-
-        this.setData({
-            whichEditor:"",
-            useMask:false,
-            showEditDlg:false,
-            editValue:"",
-            MyZhuangTai: obj,
-            ZhuangTaiShow:obj.toString(),
-        })
-    }
-
-    var value = {"caidan": this.data.MyCaiDan.toString(), "zhuangtai:":this.data.MyZhuangTai.toString()}
-    this.SetData("0000-00-00",value);
   },
 
   bindKeyInput: function (e) {
@@ -186,15 +153,13 @@ Page({
     MyCaiDan:[],
     MyZhuangTai:[],
 
-    CaiDanShow:"",
-    ZhuangTaiShow:"",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.GetData("0000-00-00");
+    this.LoadData();
   },
 
   /**
@@ -208,12 +173,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    if (typeof this.getTabBar === 'function' &&
-    this.getTabBar()) {
-    this.getTabBar().setData({
-      selected: 1
-    })
-  }
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 1
+      })
+    }
   },
 
   /**

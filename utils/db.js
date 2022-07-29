@@ -38,5 +38,32 @@ async function GetCloudData(date_)
   }
 }
 
+async function SetDataValue(date_, value_)
+{
+  var oldvalue = wx.getStorageSync(date_);
+  if(oldvalue != value_)
+  {
+    wx.setStorageSync(date_, value_);
+    await SetCloudData(date_);
+  }
+}
+ 
+async function GetDataValue(date_)
+{
+  var value = wx.getStorageSync(date_);
+  if(value)
+  {	
+  }
+  else
+  {
+    await GetCloudData(date_);
+    value = wx.getStorageSync(date_);
+  }
+  
+  return value;
+}
+
 module.exports.SetCloudData = SetCloudData
 module.exports.GetCloudData = GetCloudData
+module.exports.SetDataValue = SetDataValue
+module.exports.GetDataValue = GetDataValue

@@ -45,7 +45,7 @@
     align-items: center;
 }
 
-.editDlgDelBtn
+.editDlgCancelBtn
 {
     margin-top: 100rpx;
     margin-right: 60rpx;   
@@ -66,16 +66,18 @@
     color: rgb(66, 66, 66);
 }
 
-
-
 .weui-check__label:active {
     background-color: #ECECEC;
   }
 
-  .weui-cell__hd_in-select-after,
-.weui-cell__bd_in-select-before {
-  padding-left: 15px;
-}
+  .weui-cell__c2-left{
+    width: 40%;
+    margin-left: 25%;
+  }
+  
+  .weui-cell__c2-right{
+    margin-left: 0;
+  }
 
 .weui-input 
 {
@@ -91,7 +93,7 @@
   }
 
 .weui-cell {
-    padding: 10px 15px;
+    padding: 5px 5px;
     position: relative;
     display: -webkit-box;
     display: -webkit-flex;
@@ -125,6 +127,11 @@
     margin-top: 50;
   }
 
+  .weui-cell_line{
+    height: 5px; 
+  }
+
+  .weui-cell:before,
   .weui-cells:before {
     content: " ";
     position: absolute;
@@ -135,6 +142,8 @@
     border-top: 1rpx solid #D9D9D9;
     color: #D9D9D9;
   }
+
+  .weui-cell:after,
   .weui-cells:after {
     content: " ";
     position: absolute;

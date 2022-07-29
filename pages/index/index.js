@@ -2,8 +2,6 @@
 var util = require('../../utils/util.js')
 var db = require('../../utils/db.js')
 
-const app = getApp()
-
 Page({
 
   // 事件处理函数
@@ -14,48 +12,35 @@ Page({
     this.GetData(e.detail.value);
   },
 
-  SetData: async function(date_, value_)
-  {
-    var oldvalue = wx.getStorageSync(date_);
-    if(oldvalue != value_)
-    {
-      wx.setStorageSync(date_, value_);
-      await db.SetCloudData(date_);
-    }
-  },
-   
-  GetData: async function(date_)
-  {
-    var value = wx.getStorageSync(date_);
-    if(value)
-    {	
-    }
-    else
-    {
-      await db.GetCloudData(date_);
-      value = wx.getStorageSync(date_);
-    }
 
-    var caidanobj = [];
-    var zhuangtaiobj = [];
-    if(value)
+  LoadData: async function()
+  {
     {
-      if(value.caidan != "") caidanobj =  value.caidan.split(",");
-      if(value.zhuangtai != "") zhuangtaiobj = value.zhuangtai.split(",");
-    }
+      var value = await db.GetDataValue("0000-00-00");
+      var caidanobj = [];
+      var zhuangtaiobj = [];
+      if(value)
+      {
+        if(value.caidan) caidanobj =  value.caidan.split(",");
+        if(value.zhuangtai) zhuangtaiobj = value.zhuangtai.split(",");
+      }
 
-    if(date_ == "0000-00-00")
-    {
       this.setData({
         MyCaiDan:caidanobj,
-        CaiDanShow:caidanobj.toString(),
-
         MyZhuangTai:zhuangtaiobj,
-        ZhuangTaiShow:zhuangtaiobj.toString(),
-      });
+      })
     }
-    else
+
     {
+      var value = await db.GetDataValue(this.data.vdate);
+      var caidanobj = [];
+      var zhuangtaiobj = [];
+      if(value)
+      {
+        if(value.caidan) caidanobj =  value.caidan.split(",");
+        if(value.zhuangtai) zhuangtaiobj = value.zhuangtai.split(",");
+      }
+
       this.setData({
         MyJinRiCaiDan:caidanobj,
         MyJinRiZhuangTai:zhuangtaiobj,
@@ -136,8 +121,9 @@ Page({
 
     if(this.data.JinRiCaiDanDisEdit)
     {
-      var value = {"caidan": this.data.MyJinRiCaiDan.toString(), "zhuangtai:":this.data.MyJinRiZhuangTai.toString()}
-      this.SetData(this.data.vdate,value);
+      var value = {"caidan": this.data.MyJinRiCaiDan.toString(), "zhuangtai":this.data.MyJinRiZhuangTai.toString()}
+      db.SetDataValue(this.data.vdate,value);
+      this.JinRiCaiDanReLoad();
     }
   },
 
@@ -148,8 +134,9 @@ Page({
 
     if(this.data.JinRiCaiDanDisEdit)
     {
-      var value = {"caidan": this.data.MyJinRiCaiDan.toString(), "zhuangtai:":this.data.MyJinRiZhuangTai.toString()}
-      this.SetData(this.data.vdate,value);
+      var value = {"caidan": this.data.MyJinRiCaiDan.toString(), "zhuangtai":this.data.MyJinRiZhuangTai.toString()}
+      db.SetDataValue(this.data.vdate,value);
+      this.JinRiZhuangTaiReLoad();
     }
 
   },
@@ -182,8 +169,7 @@ Page({
       vdate: today,
     });
 
-    this.GetData("0000-00-00");
-    this.GetData(today);
+    this.LoadData();
   },
 
   /**

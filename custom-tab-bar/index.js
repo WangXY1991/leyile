@@ -5,8 +5,9 @@ Component({
     selectedColor: "#3cc51f",
     list: [{
       pagePath: "/pages/index/index",
-      text: "今日食谱"
-    }, {
+      text: "今日饮食"
+    }, 
+    {
       pagePath: "/pages/fulllists/fulllists",
       text: "食谱列表"
     }]
