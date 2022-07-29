@@ -18,10 +18,10 @@
     </view>
 
     <checkbox-group bindchange="jinrizhuangtaiChange">
-	  <label class="weui-cell" wx:for="{{JinRiZhuangTaiShow}}" wx:key="{{item.name}}">
+	  <label class="weui-cell" wx:for="{{JinRiZhuangTaiShow}}" wx:for-item="item" wx:key="item">
       <view class="weui-cell__c2-left">{{item.name}}</view>
       <view class="weui-cell__c2-right">
-        <checkbox value="{{item.value}}" checked="{{item.checked}}" disabled="{{JinRiZhuangTaiDisEdit}}"/>
+        <checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{JinRiZhuangTaiDisEdit}}"/>
       </view>
 	  </label>
     </checkbox-group>
@@ -33,11 +33,11 @@
       <button class="btn" type="default" plain="true" size="mini" bindtap="editjinricaidan">{{JinRiCaiDanDisEdit?"编辑":"保存"}}</button>
     </view>
     <checkbox-group bindchange="jinricaidanChange">
-	  <label class="weui-cell" wx:for="{{JinRiCaiDanShow}}" wx:key="{{item.name}}">
+	  <label class="weui-cell" wx:for="{{JinRiCaiDanShow}}" wx:for-item="item" wx:key="item">
     
     <view class="weui-cell__c2-left">{{item.name}}</view>
     <view class="weui-cell__c2-right">
-      <checkbox value="{{item.value}}" checked="{{item.checked}}" disabled="{{JinRiCaiDanDisEdit}}"/>
+      <checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{JinRiCaiDanDisEdit}}"/>
     </view>
     
 

@@ -20,10 +20,10 @@
 <view>
   <view class="czhuangtai">状态表：</view>
 
-  <label class="weui-cell" wx:for="{{MyZhuangTai}}" wx:for-index="idx" wx:for-item="itemName">
-    <view class="weui-cell__c2-left">{{itemName}}</view>
+  <label class="weui-cell" wx:for="{{MyZhuangTai}}" wx:for-item="item" wx:key="item">
+    <view class="weui-cell__c2-left">{{item}}</view>
 		<view class="weui-cell__c2-right">
-		  <button type="default" plain="true" style="width:108rpx;height:54rpx;padding:0;" mark:type="zhuangtai" mark:value="{{itemName}}" bindtap="deletefromlists">删除</button>
+		  <button type="default" plain="true" style="width:108rpx;height:54rpx;padding:0;" mark:type="zhuangtai" mark:value="{{item}}" bindtap="deletefromlists">删除</button>
 		</view>
   </label>
   <view >
@@ -35,10 +35,10 @@
 <view>
   <view class="ccaidan">菜单表：</view>
 
-  <label class="weui-cell" wx:for="{{MyCaiDan}}" wx:for-index="idx" wx:for-item="itemName">
-    <view class="weui-cell__c2-left">{{itemName}}</view>
+  <label class="weui-cell" wx:for="{{MyCaiDan}}" wx:for-item="item" wx:key="item">
+    <view class="weui-cell__c2-left">{{item}}</view>
 		<view class="weui-cell__c2-right">
-		  <button type="default" plain="true" style="width:108rpx;height:54rpx;padding:0;" mark:type="caidan" mark:value="{{itemName}}" bindtap="deletefromlists">删除</button>
+		  <button type="default" plain="true" style="width:108rpx;height:54rpx;padding:0;" mark:type="caidan" mark:value="{{item}}" bindtap="deletefromlists">删除</button>
 		</view>
   </label>
   <view >
