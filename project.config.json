@@ -3,7 +3,15 @@
   "packOptions": {
     "ignore": [
       {
-        "value": "cloudfunction",
+        "value": "cloudfunction/test/package-lock.json",
+        "type": "file"
+      },
+      {
+        "value": "cloudfunction/test/miniprogram_npm",
+        "type": "folder"
+      },
+      {
+        "value": "cloudfunction/test/node_modules",
         "type": "folder"
       },
       {
